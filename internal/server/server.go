@@ -9,28 +9,28 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-type Server struct{
-	logger *log.Logger
-	server *http.Server
+type Server struct {
+	Logger *log.Logger
+	Server *http.Server
 }
 
-func CreateRouter(l *log.Logger) (s Server){
+func CreateRouter(l *log.Logger) (s Server) {
 	r := chi.NewRouter()
 
-	r.Get("/", handlers.HandlRoot)	
+	r.Get("/", handlers.HandlRoot)
 	r.Post("/upload", handlers.HandleUploat)
 
 	httpServ := &http.Server{
-		Addr: "8080",
-		Handler: r,
-		ErrorLog: l,
-		ReadTimeout: 5*time.Second,
-		WriteTimeout: 10*time.Second,
-		IdleTimeout: 15*time.Second,
+		Addr:         ":8080",
+		Handler:      r,
+		ErrorLog:     l,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  15 * time.Second,
 	}
 
 	return Server{
-		logger: l,
-		server: httpServ,
+		Logger: l,
+		Server: httpServ,
 	}
 }
